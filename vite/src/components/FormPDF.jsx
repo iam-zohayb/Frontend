@@ -13,7 +13,7 @@ const FormPDF = ({ match }) => {
     const fetchPDF = async () => {
       try {
         // Correctly format the URL string
-        const response = await axios.get(`http://localhost:5000/api/forms/${match.params.id}/pdf`, {
+        const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${match.params.id}/pdf`, {
           responseType: 'blob',
         });
         const url = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));

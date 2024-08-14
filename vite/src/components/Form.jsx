@@ -15,7 +15,7 @@ const Form = () => {
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/drivers');
+        const response = await axios.get('https://apii-cyan.vercel.app/api/drivers');
         setDrivers(response.data);
       } catch (error) {
         console.error('Error fetching drivers:', error);

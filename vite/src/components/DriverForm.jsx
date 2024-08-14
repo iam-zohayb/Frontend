@@ -7,7 +7,7 @@ const DriverForm = ({ formData, handleChange }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/forms', { formData, passengers });
+      await axios.post('https://apii-cyan.vercel.app/api/forms', { formData, passengers });
       alert('Data saved successfully!');
     } catch (error) {
       console.error('Error saving data:', error);

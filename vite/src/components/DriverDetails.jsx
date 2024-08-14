@@ -11,7 +11,7 @@ const DriverDetails = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/drivers/${iqamaNo}`);
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/drivers/${iqamaNo}`);
       setDriverData(response.data);
     } catch (error) {
       console.error('Error fetching driver details:', error);
