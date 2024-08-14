@@ -26,7 +26,7 @@ const Form = () => {
   }, []);
   const printPDF = async (form) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/forms/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -39,7 +39,7 @@ const Form = () => {
   };
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/forms/${statementNo}`);
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${statementNo}`);
       setFormResults(response.data);
       setFormData(response.data.formData);
       setPassengers(response.data.passengers);
@@ -110,7 +110,7 @@ const Form = () => {
     event.preventDefault();
     try {
       if (formResults) {
-        await axios.put(`http://localhost:5000/api/forms/${statementNo}`, {
+        await axios.put(`https://apii-cyan.vercel.app/api/forms/${statementNo}`, {
           formData: {
             ...formData,
             السائق_اسم: selectedDriver?.السائق_اسم || '',
@@ -124,7 +124,7 @@ const Form = () => {
           passengers
         });
       } else {
-        await axios.post('http://localhost:5000/api/forms', {
+        await axios.post('https://apii-cyan.vercel.app/api/forms', {
           formData: {
             ...formData,
             السائق_اسم: selectedDriver?.السائق_اسم || '',

@@ -33,6 +33,7 @@ const DriverDetails = () => {
     setEditing(true);
   };
 
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDriverData((prevData) => ({
@@ -44,9 +45,9 @@ const DriverDetails = () => {
   const handleUpdate = async () => {
     try {
       if (driverData._id) {
-        await axios.put(`http://localhost:5000/api/drivers/${iqamaNo}`, driverData);
+        await axios.put(`https://apii-cyan.vercel.app/api/drivers/${iqamaNo}`, driverData);
       } else {
-        await axios.post('http://localhost:5000/api/drivers', driverData);
+        await axios.post('https://apii-cyan.vercel.app/api/drivers', driverData);
       }
       setShowAlert(true);
       setEditing(false);
