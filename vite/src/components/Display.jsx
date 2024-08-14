@@ -22,7 +22,7 @@ const Display = () => {
 
   const generatePDF = async (form) => {
     try {
-      const response = await axios.get(`https://apii-cyan.vercel.app/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
