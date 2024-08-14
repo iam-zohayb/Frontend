@@ -22,7 +22,7 @@ const Display = () => {
 
   const generatePDF = async (form) => {
     try {
-      const response = await axios.get(`https://apii-cyan.vercel.app/api/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -41,7 +41,7 @@ const Display = () => {
 
   const printPDF = async (form) => {
     try {
-      const response = await axios.get(`https://apii-cyan.vercel.app/forms/api/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
