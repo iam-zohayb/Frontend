@@ -10,7 +10,7 @@ const Display = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/forms');
+        const response = await axios.get('https://apii-cyan.vercel.app/api/forms');
         setForms(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -22,7 +22,7 @@ const Display = () => {
 
   const generatePDF = async (form) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/forms/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -41,7 +41,7 @@ const Display = () => {
 
   const printPDF = async (form) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/forms/${form._id}/pdf`, {
+      const response = await axios.get(`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`, {
         responseType: 'blob',
       });
       const blob = new Blob([response.data], { type: 'application/pdf' });
