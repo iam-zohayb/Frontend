@@ -265,6 +265,7 @@ const DriverDetails = () => {
       )}
     </div>
   );
+  
 };
 
 export default DriverDetails;

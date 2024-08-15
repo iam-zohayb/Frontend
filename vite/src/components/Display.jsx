@@ -54,6 +54,7 @@ const Display = () => {
   };
 
   return (
+    
     <div>
       <Navbar/>
       <h1 style={{fontSize:'30px'}}>Stored Forms</h1>

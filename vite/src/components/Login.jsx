@@ -23,6 +23,7 @@ const Login = () => {
     }
   };
 
+  
   const handleSignupClick = () => {
     navigate('/signup'); // Redirect to signup page if they don't have an account
   };
