@@ -60,7 +60,7 @@ const Display = () => {
       {forms.map((form) => (
         <div key={form._id} className="display-data">
        
-          <QRCode value={`http://localhost:5000/api/forms/${form._id}/pdf`} style={{width:'7%', height:'7%'}}/>
+          <QRCode value={`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`} style={{width:'7%', height:'7%'}}/>
           <div className="buttons">
        
             <button onClick={() => generatePDF(form)}>Download PDF</button>
