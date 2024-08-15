@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Form.css';
 import Navbar from './Navbar';
 import ComboBox from './ComboBox';
-import Footer from './Footer';
+
 const Form = () => {
   const [statementNo, setStatementNo] = useState('');
   const [formData, setFormData] = useState(null);
@@ -14,6 +14,7 @@ const Form = () => {
   const [formResults, setFormResults] = useState(null);
   const [editt, setEdit] = useState(false);
 
+  
   
   useEffect(() => {
     const fetchDrivers = async () => {
