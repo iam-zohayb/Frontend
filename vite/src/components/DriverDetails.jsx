@@ -8,17 +8,21 @@ const DriverDetails = () => {
   const [driverData, setDriverData] = useState(null);
   const [editing, setEditing] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
+  const [editt, setEdit] = useState(false);
   const handleSearch = async () => {
-    try {
-      const response = await axios.get(`https://apii-cyan.vercel.app/api/drivers/${iqamaNo}`);
-      setDriverData(response.data);
-    } catch (error) {
-      console.error('Error fetching driver details:', error);
-      alert('Driver not found.');
+    if (iqamaNo) {  // Check if iqamaNo is not null or empty
+      try {
+        const response = await axios.get(`https://apii-cyan.vercel.app/api/drivers/${iqamaNo}`);
+        setDriverData(response.data);
+      } catch (error) {
+        console.error('Error fetching driver details:', error);
+        alert('Driver not found.');
+      }
+      setEdit(false);
+    } else {
+      alert('Please enter a valid iqama number.');
     }
   };
-
   const handleNew = () => {
     setIqamaNo('');
     setDriverData({
@@ -31,9 +35,9 @@ const DriverDetails = () => {
       شركة_النقل_اسم: ''
     });
     setEditing(true);
+    setEdit(true);
   };
 
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setDriverData((prevData) => ({
@@ -45,20 +49,35 @@ const DriverDetails = () => {
   const handleUpdate = async () => {
     try {
       if (driverData._id) {
+        // Update driver details in the Driver table
         await axios.put(`https://apii-cyan.vercel.app/api/drivers/${iqamaNo}`, driverData);
+  
+        // Update form details if iqamaNo exists in the Form table
+        await axios.put(`https://apii-cyan.vercel.app/api/forms/update-driver/${iqamaNo}`, {
+          السائق_اسم: driverData.السائق_اسم,
+          السائق_جنسية: driverData.السائق_جنسية,
+          السائق_جوال: driverData.السائق_جوال,
+          السائق_هوية_رقم: driverData.السائق_هوية_رقم,
+          اللوحة_رقم: driverData.اللوحة_رقم,
+          المركبة_رقم: driverData.المركبة_رقم,
+          شركة_النقل_اسم: driverData.شركة_النقل_اسم
+        });
+  
       } else {
         await axios.post('https://apii-cyan.vercel.app/api/drivers', driverData);
       }
       setShowAlert(true);
       setEditing(false);
-      setDriverData(null); 
-      setIqamaNo(''); 
+      setEdit(false);
+      setDriverData(null);
+      setIqamaNo('');
       setTimeout(() => setShowAlert(false), 7000);
     } catch (error) {
       console.error('Error updating driver details:', error);
       alert('Failed to update driver details.');
     }
   };
+  
 
   const handleCancel = () => {
     setEditing(false);
@@ -139,6 +158,7 @@ const DriverDetails = () => {
                     name="السائق_هوية_رقم"
                     value={driverData.السائق_هوية_رقم}
                     onChange={handleChange}
+                    readOnly={  !editt}
                   />
                 </div>
               </div>

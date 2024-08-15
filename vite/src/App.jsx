@@ -66,7 +66,8 @@ const App = () => {
       
         <Routes>
        
-          <Route path="/" element={<Login />} />
+       
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/form" element={
             <Form
@@ -79,10 +80,12 @@ const App = () => {
           } />
           <Route path="/display" element={<Display />} />
           <Route path="/driver-details" element={<DriverDetails />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
+    
       </div>
     </Router>
+  
   );
 };
 

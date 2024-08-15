@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './ComboBox.css';
 
-const ComboBox = ({ options, onSelect }) => {
+const ComboBox = ({ options, onSelect, initialValue = ''  }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,9 @@ const ComboBox = ({ options, onSelect }) => {
       options.filter(option => option.السائق_اسم.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   }, [searchTerm, options]);
+  useEffect(() => {
+    setSearchTerm(initialValue);
+  }, [initialValue]);
 
   const handleSelect = (option) => {
     onSelect(option);
@@ -21,6 +24,7 @@ const ComboBox = ({ options, onSelect }) => {
   };
 
   const handleInputChange = (e) => {
+    
     setSearchTerm(e.target.value);
     setIsOpen(true);
   };
@@ -91,20 +95,20 @@ const ComboBox = ({ options, onSelect }) => {
           ref={optionsRef}
         >
           {filteredOptions.length > 0 ? (
-            <div className="flex flex-col">
-              <div className="-m-1.5 overflow-x-auto">
-                <div className="p-1.5 min-w-full inline-block align-middle">
-                  <div className="overflow-hidden">
-                    <table className="min-w-full">
+            <div className="flex flex-col" >
+              <div className="-m-1.5 overflow-x-auto" >
+                <div className="p-1.5 min-w-full inline-block align-middle" >
+                  <div className="overflow-hidden" >
+                    <table className="min-w-full"style={{backgroundColor:'#f4f4f4'}}>
                       <thead>
-                        <tr>
-                          <th scope="col" className="px-10 text-start text-xs font-medium text-gray-500 uppercase">Name</th>
-                          <th scope="col" className="px-9 text-start text-xs font-medium text-gray-500 uppercase" >Iqama #</th>
-                          <th scope="col" className="px-7 text-start text-xs font-medium text-gray-500 uppercase">Company</th>
-                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-500 uppercase">Vehicle#</th>
-                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-500 uppercase">Mobile#</th>
-                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-500 uppercase">Plate#</th>
-                          <th scope="col" className="px-7 text-end text-xs font-medium text-gray-500 uppercase">Nationality</th>
+                        <tr >
+                          <th scope="col" className="px-10 text-start text-xs font-medium text-gray-600 uppercase">Name</th>
+                          <th scope="col" className="px-9 text-start text-xs font-medium text-gray-600 uppercase" >Iqama #</th>
+                          <th scope="col" className="px-7 text-start text-xs font-medium text-gray-600 uppercase">Company</th>
+                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-600 uppercase">Vehicle#</th>
+                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-600 uppercase">Mobile#</th>
+                          <th scope="col" className="px-8 text-end text-xs font-medium text-gray-600 uppercase">Plate#</th>
+                          <th scope="col" className="px-7 text-end text-xs font-medium text-gray-600 uppercase">Nationality</th>
                         </tr>
                       </thead>
                    

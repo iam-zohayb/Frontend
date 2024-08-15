@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Form.css';
 import Navbar from './Navbar';
 import ComboBox from './ComboBox';
+import Footer from './Footer';
 const Form = () => {
   const [statementNo, setStatementNo] = useState('');
   const [formData, setFormData] = useState(null);
@@ -11,7 +12,9 @@ const Form = () => {
   const [selectedDriver, setSelectedDriver] = useState(null);
   const [editing, setEditing] = useState(false);
   const [formResults, setFormResults] = useState(null);
+  const [editt, setEdit] = useState(false);
 
+  
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
@@ -71,6 +74,10 @@ const Form = () => {
     setPassengers([]);
     setSelectedDriver(null);
     setEditing(true);
+    setEdit(true);
+  };
+  const handleCancel = () => {
+    setEditing(false);
   };
 
   const handleDriverChange = (event) => {
@@ -103,8 +110,22 @@ const Form = () => {
   };
 
   const handleEdit = () => {
+    // If there is existing driver data and no new driver is selected, set it to the selectedDriver state
+    if (!selectedDriver && formData) {
+      setSelectedDriver({
+        السائق_اسم: formData.السائق_اسم,
+        السائق_جنسية: formData.السائق_جنسية,
+        السائق_جوال: formData.السائق_جوال,
+        السائق_هوية_رقم: formData.السائق_هوية_رقم,
+        اللوحة_رقم: formData.اللوحة_رقم,
+        المركبة_رقم: formData.المركبة_رقم,
+        شركة_النقل_اسم: formData.شركة_النقل_اسم
+      });
+    }
     setEditing(true);
+    setEdit(false);
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -153,6 +174,7 @@ const Form = () => {
   return (
     <>
       <Navbar />
+     
       <div id="pdf-content" style={{ }}>
         <h2 style={{ fontSize: '25px' }}><b>Search Form</b></h2>
         <div className="search-bar">
@@ -163,10 +185,11 @@ const Form = () => {
             onChange={(e) => setStatementNo(e.target.value)}
           />
           <button onClick={handleSearch} style={{ margin: '10px' }}>Go</button>
-          <button onClick={handleNew}>New</button>
+          <button onClick={handleNew} >New</button>
         </div>
-
+  
         {formResults && !editing && formData && (
+                <div className='bordr'>
           <div>
             <h2 className='h'><b>Disclosure Statement Details</b></h2>
             <table className="form-table">
@@ -221,7 +244,7 @@ const Form = () => {
       
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr>
+                  <tr style={{backgroundColor:'#90b8a6'}}>
                     <th style={{ border: '1px solid black', padding: '8px', textAlign: 'center' }}>Driver Name</th>
                     <th style={{ border: '1px solid black', padding: '8px', textAlign: 'center' }}>Nationality</th>
                     <th style={{ border: '1px solid black', padding: '8px', textAlign: 'center' }}>Mobile #</th>
@@ -270,6 +293,7 @@ const Form = () => {
               <button onClick={() => printPDF(formResults)}>Print PDF</button>
             </div>
           </div>
+          </div>
         )}
 
         {editing && formData && (
@@ -290,7 +314,7 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
                 <label className="label-colored">Statement #</label>
-                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}   readOnly={!!formResults} />
+                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}  readOnly={  !editt} />
               </div>
               <div className="form-section">
                 <label className="label-colored">Umrah Company Name</label>
@@ -357,14 +381,51 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
             
-                <ComboBox options={drivers} onSelect={handleDriverSelect} />
+                <ComboBox options={drivers} onSelect={handleDriverSelect}  initialValue={selectedDriver ? selectedDriver.السائق_اسم : ''} />
                 
               </div>
             </div>
+            {/* <div className="form-row">
+          <div className="form-section">
+            <label className="label-colored">Driver Name</label>
+            <input type="text"  value={formData.السائق_اسم} onChange={handleChange} readOnly />
+          </div>
+          <div className="form-section">
+            <label className="label-colored">Iqama no</label>
+            <input type="number"  value={formData.إلى} onChange={handleChange} readOnly />
+          </div>
+        </div>
 
+        <div className="form-row">
+          <div className="form-section">
+            <label className="label-colored">Nationality</label>
+            <input type="text"  value={formData.الرحلة_وقت} onChange={handleChange} readOnly />
+          </div>
+          <div className="form-section">
+            <label className="label-colored">Company </label>
+            <input type="text"  value={formData.إلى} onChange={handleChange} readOnly />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-section">
+            <label className="label-colored">Mobile#</label>
+            <input type="text"  value={formData.الرحلة_وقت} onChange={handleChange} readOnly />
+          </div>
+          <div className="form-section">
+            <label className="label-colored">Plate # </label>
+            <input type="text"  value={formData.إلى} onChange={handleChange} readOnly />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-section">
+            <label className="label-colored">Vehicle</label>
+            <input type="text"  value={formData.الرحلة_وقت} onChange={handleChange} readOnly />
+          </div>
+         
+        </div>  */}
             <h3 className='h'><b>Pilgrims Information</b></h3>
             {passengers.map((passenger, index) => (
-              <div key={index} className="passenger-row">
+              <div key={index} className="passenger-row" style={{marginBottom:'10px'}}>
                 <label className="label-colored" >Umrah Number</label>
                 <input type="text" name="رقم_المعتمر" value={passenger.رقم_المعتمر} onChange={(event) => handlePassengerChange(index, event)} />
                 <label className="label-colored" style={{marginLeft:'10px'}}>Pilgrim Name</label>
@@ -379,11 +440,15 @@ const Form = () => {
             </div>
             <div className="button-container">
               <button type="submit">Save</button>
+              <button type="button" onClick={handleCancel} style={{
+         
+              }}>Cancel</button>
             </div>
           </form>
         )}
-        
-      </div>
+        </div>
+  
+  
     </>
   );
 };
