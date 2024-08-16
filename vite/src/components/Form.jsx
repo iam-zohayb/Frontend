@@ -15,7 +15,6 @@ const Form = () => {
   const [editt, setEdit] = useState(false);
 
   
-  
   useEffect(() => {
     const fetchDrivers = async () => {
       try {
@@ -435,7 +434,6 @@ const Form = () => {
                 <input type="text" name="جنسية" value={passenger.جنسية} onChange={(event) => handlePassengerChange(index, event)} />
               </div>
             ))}
-
 
 <div className="button-container">
             <button type="button" onClick={addPassenger}>Add Passenger</button>
