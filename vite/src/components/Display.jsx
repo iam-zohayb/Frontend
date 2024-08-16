@@ -59,7 +59,7 @@ const Display = () => {
       <h1 style={{fontSize:'30px',marginTop:'20px'}}><b>Disclosure Statement Prints</b></h1>
       {forms.map((form) => (
         <div key={form._id} className="display-data">
-       
+          <h2><b>Statement No: </b>{form?.formData?.الكشف_رقم || 'N/A'}</h2>
           <QRCode value={`https://apii-cyan.vercel.app/api/forms/${form._id}/pdf`} style={{width:'7%', height:'7%'}}/>
           <div className="buttons">
        
