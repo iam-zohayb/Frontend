@@ -56,7 +56,7 @@ const Display = () => {
   return (
     <div>
       <Navbar/>
-      <h1 style={{fontSize:'30px',marginTop:'20px'}}><b>Stored Forms</b></h1>
+      <h1 style={{fontSize:'30px',marginTop:'20px'}}><b>Disclosure Statement Prints</b></h1>
       {forms.map((form) => (
         <div key={form._id} className="display-data">
        
