@@ -1,3 +1,4 @@
+//vite/components/Form.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Form.css';
@@ -13,6 +14,8 @@ const Form = () => {
   const [editing, setEditing] = useState(false);
   const [formResults, setFormResults] = useState(null);
   const [editt, setEdit] = useState(false);
+
+
 
   
   useEffect(() => {
@@ -53,29 +56,38 @@ const Form = () => {
     }
   };
 
-  const handleNew = () => {
-    setStatementNo('');
-    setFormData({
-      تاريخ: '',
-      الكشف_تاريخ: '',
-      الكشف_رقم: '',
-      شركة_العمرة_اسم: '',
-      شركة_العمرة_رقم: '',
-      الجنسية: '',
-      المعتمرين_عدد: '',
-      الرحلة_رقم: '',
-      من: '',
-      الرحلة_تاريخ: '',
-      الناقل: '',
-      المنفذ: '',
-      الرحلة_وقت: '',
-      إلى: ''
-    });
-    setPassengers([]);
-    setSelectedDriver(null);
-    setEditing(true);
-    setEdit(true);
+  const handleNew = async () => {
+    try {
+      const response = await axios.get('https://apii-cyan.vercel.app/api/forms/');
+      const nextStatementNo = response.data.nextStatementNo || 1;
+  
+      setFormData({
+        الكشف_رقم: nextStatementNo,  // Automatically set the next statement number
+        تاريخ: '',
+        الكشف_تاريخ: '',
+        شركة_العمرة_اسم: '',
+        شركة_العمرة_رقم: '',
+        الجنسية: '',
+        المعتمرين_عدد: '',
+        الرحلة_رقم: '',
+        من: '',
+        الرحلة_تاريخ: '',
+        الناقل: '',
+        المنفذ: '',
+        الرحلة_وقت: '',
+        إلى: ''
+      });
+      setPassengers([]);
+      setSelectedDriver(null);
+      setEditing(true);
+      setEdit(true);
+    } catch (error) {
+      console.error('Error fetching the next statement number:', error);
+      alert('Failed to get next statement number.');
+    }
   };
+  
+  
   const handleCancel = () => {
     setEditing(false);
   };
@@ -145,7 +157,7 @@ const Form = () => {
           passengers
         });
       } else {
-        await axios.post('https://apii-cyan.vercel.app/api/forms', {
+        await axios.post('https://apii-cyan.vercel.app/api/forms/', {
           formData: {
             ...formData,
             السائق_اسم: selectedDriver?.السائق_اسم || '',
@@ -174,8 +186,9 @@ const Form = () => {
   return (
     <>
       <Navbar />
-     
+  
       <div id="pdf-content" style={{ }}>
+    
         <h2 style={{ fontSize: '25px' }}><b>Search Form</b></h2>
         <div className="search-bar">
           <input
@@ -314,7 +327,7 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
                 <label className="label-colored">Statement #</label>
-                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}  readOnly={  !editt} />
+                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange} />
               </div>
               <div className="form-section">
                 <label className="label-colored">Umrah Company Name</label>
@@ -447,8 +460,8 @@ const Form = () => {
           </form>
         )}
         </div>
-  
-  
+
+
     </>
   );
 };
