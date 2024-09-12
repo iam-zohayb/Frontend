@@ -327,7 +327,7 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
                 <label className="label-colored">Statement #</label>
-                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange} readOnly />
+                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}  />
               </div>
               <div className="form-section">
                 <label className="label-colored">Umrah Company Name</label>
