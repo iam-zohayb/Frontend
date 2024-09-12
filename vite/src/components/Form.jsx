@@ -62,7 +62,7 @@ const Form = () => {
       const nextStatementNo = response.data.nextStatementNo || 1;
       console.log('Next Statement No:', nextStatementNo); // Log to check the returned number
       setFormData({
-        الكشف_رقم: nextStatementNo, // Automatically set the next statement number
+        الكشف_رقم: nextStatementNo+1, // Automatically set the next statement number
         تاريخ: '',
         الكشف_تاريخ: '',
         شركة_العمرة_اسم: '',
