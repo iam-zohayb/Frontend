@@ -60,9 +60,9 @@ const Form = () => {
     try {
       const response = await axios.get('https://apii-cyan.vercel.app/api/forms/');
       const nextStatementNo = response.data.nextStatementNo || 1;
-  
+      console.log('Next Statement No:', nextStatementNo); // Log to check the returned number
       setFormData({
-        الكشف_رقم: nextStatementNo,  // Automatically set the next statement number
+        الكشف_رقم: nextStatementNo, // Automatically set the next statement number
         تاريخ: '',
         الكشف_تاريخ: '',
         شركة_العمرة_اسم: '',
@@ -327,7 +327,7 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
                 <label className="label-colored">Statement #</label>
-                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}  />
+                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange} readOnly />
               </div>
               <div className="form-section">
                 <label className="label-colored">Umrah Company Name</label>
