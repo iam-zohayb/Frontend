@@ -58,11 +58,12 @@ const Form = () => {
 
   const handleNew = async () => {
     try {
+      setStatementNo('');
       const response = await axios.get('https://apii-cyan.vercel.app/api/forms/');
       const nextStatementNo = response.data.nextStatementNo || 1;
       console.log('Next Statement No:', nextStatementNo); // Log to check the returned number
       setFormData({
-        الكشف_رقم: nextStatementNo+1, // Automatically set the next statement number
+        الكشف_رقم: nextStatementNo, // Automatically set the next statement number
         تاريخ: '',
         الكشف_تاريخ: '',
         شركة_العمرة_اسم: '',
@@ -156,7 +157,8 @@ const Form = () => {
           },
           passengers
         });
-      } else {
+      } else 
+      {
         await axios.post('https://apii-cyan.vercel.app/api/forms/', {
           formData: {
             ...formData,
@@ -182,7 +184,19 @@ const Form = () => {
       alert('Failed to save data.');
     }
   };
-
+  const handleDelete = async (formId) => {
+    try {
+      await axios.delete(`https://apii-cyan.vercel.app/api/forms/${formId}`);
+      alert('Form deleted successfully!');
+      setFormResults(null);
+      setFormData(null);
+      setStatementNo('');
+    } catch (error) {
+      console.error('Error deleting form:', error);
+      alert('Failed to delete form.');
+    }
+  };
+  
   return (
     <>
       <Navbar />
@@ -304,6 +318,7 @@ const Form = () => {
             <div className="button-container">
               <button onClick={handleEdit}>Edit</button>
               <button onClick={() => printPDF(formResults)}>Print PDF</button>
+
             </div>
           </div>
           </div>
@@ -327,7 +342,7 @@ const Form = () => {
             <div className="form-row">
               <div className="form-section">
                 <label className="label-colored">Statement #</label>
-                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange} readOnly />
+                <input type="text" name="الكشف_رقم" value={formData.الكشف_رقم} onChange={handleChange}  />
               </div>
               <div className="form-section">
                 <label className="label-colored">Umrah Company Name</label>
