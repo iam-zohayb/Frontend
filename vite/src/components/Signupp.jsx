@@ -15,7 +15,7 @@ const Signupp = () => {
       const response = await axios.post('https://apii-cyan.vercel.app/api/signup', { email, password });
       console.log(response.data); 
       if (response.data.success === true) { 
-        navigate('/form'); 
+        navigate('/login'); 
       } else {
         setError(response.data.message);
       }
