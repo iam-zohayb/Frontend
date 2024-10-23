@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Form from './components/Form';
 import Display from './components/Display';
 import DriverDetails from './components/DriverDetails';
-import Signup from './components/Signupp'; // Import the Signup component
-
-import Login from './components/Login'
+import Signup from './components/Signupp';
+import Login from './components/Login';
 import './App.css';
-
+import Logs from './components/Logs';
 const App = () => {
+  // State to track authentication
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Example form data state
   const [formData, setFormData] = useState({
     تاريخ: '',
     الكشف_تاريخ: '',
@@ -35,6 +38,7 @@ const App = () => {
 
   const [passengers, setPassengers] = useState([]);
 
+  // Update form data handler
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -42,6 +46,7 @@ const App = () => {
     });
   };
 
+  // Update passenger data handler
   const handlePassengerChange = (index, event) => {
     const updatedPassengers = passengers.map((passenger, i) =>
       i === index ? { ...passenger, [event.target.name]: event.target.value } : passenger
@@ -49,6 +54,7 @@ const App = () => {
     setPassengers(updatedPassengers);
   };
 
+  // Add passenger handler
   const addPassenger = () => {
     setPassengers([
       ...passengers,
@@ -60,33 +66,53 @@ const App = () => {
     ]);
   };
 
+  // PrivateRoute component to protect routes
+  const PrivateRoute = ({ element, ...rest }) => {
+    return isAuthenticated ? element : <Navigate to="/login" />;
+  };
+
   return (
     <Router>
       <div className="App">
-      
         <Routes>
-       
-       
-          <Route path="/login" element={<Login />} />
+          {/* Public Routes */}
+          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/form" element={
-            <Form
-              formData={formData}
-              passengers={passengers}
-              handleChange={handleChange}
-              handlePassengerChange={handlePassengerChange}
-              addPassenger={addPassenger}
-            />
-          } />
-          <Route path="/display" element={<Display />} />
-          <Route path="/driver-details" element={<DriverDetails />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/form"
+            element={
+              <PrivateRoute
+                element={
+                  <Form
+                    formData={formData}
+                    passengers={passengers}
+                    handleChange={handleChange}
+                    handlePassengerChange={handlePassengerChange}
+                    addPassenger={addPassenger}
+                  />
+                }
+              />
+            }
+          />
+          <Route
+            path="/display"
+            element={<PrivateRoute element={<Display />} />}
+          />
+          <Route
+            path="/driver-details"
+            element={<PrivateRoute element={<DriverDetails />} />}
+          />
+  <Route
+            path="/logs"
+            element={<PrivateRoute element={<Logs />} />}
+          />
+          {/* Redirect unknown routes to login */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-    
       </div>
     </Router>
-  
-  
   );
 };
 
